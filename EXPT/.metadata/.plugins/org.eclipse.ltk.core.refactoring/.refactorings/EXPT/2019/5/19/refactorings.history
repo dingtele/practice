@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 2 elements from project &apos;EXPT&apos;&#x0D;&#x0A;- Original project: &apos;EXPT&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     EXPT/src/mobilepdtmgmtactivity&#x0D;&#x0A;     EXPT/src/nwpdtactivity" description="Delete elements" element1="/src&lt;nwpdtactivity" element2="/src&lt;mobilepdtmgmtactivity" elements="2" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1557108009959" subPackages="false" version="1.0"/>
+</session>
