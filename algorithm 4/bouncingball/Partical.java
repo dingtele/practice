@@ -1,4 +1,4 @@
-package pegasus.bouncingball;
+package bouncingball;
 
 import edu.princeton.cs.algs4.StdDraw;
 
@@ -7,6 +7,7 @@ public class Partical {
 	private double vx, vy; // velocity
 	private final double radius; // 
 	private int mass; // TODO
+	private int count;
 //	private double[] 
 //TODO how to set a proper dt?	
 	public Partical(double rs, double ry, double radius) {
@@ -26,7 +27,7 @@ public class Partical {
 		StdDraw.filledCircle(rx, ry, radius);
 	}
 	
-	public double timeToHitPartical(Partical o) {
+	public double timeToHitPartical(Partical that) {
 		return 0;
 	}
 	
@@ -36,5 +37,17 @@ public class Partical {
 	
 	public double timeToHitHorrizontalWall() {
 		return 0;
+	}
+	
+	public void bounceOff(Partical that) {
+		
+	}
+	
+	public void bounceOffVerticalWall() {
+		
+	}
+	
+	public void bounceOffHorizontalWall() {
+		
 	}
 }
