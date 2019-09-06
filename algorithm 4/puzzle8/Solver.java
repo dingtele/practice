@@ -1,13 +1,18 @@
 package eightpuzzle;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Solver {
-
+	private Board origin;
+	private MinPQ<Board> minQ = new MinPQ<>();
+	
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
-    	
+    	this.origin = initial;
+    	if (initial == null) 	throw new IllegalArgumentException ("input is null!!");
+    	minQ.insert(initial);
     }
 
     // is the initial board solvable? (see below)
@@ -16,10 +21,30 @@ public class Solver {
     }
 
     // min number of moves to solve initial board
-    public int moves()
+    public int moves() {
+    	
+    			
+    }
 
     // sequence of boards in a shortest solution
-    public Iterable<Board> solution()
+    public Iterable<Board> solution(){
+    	int priority = (int) (Math.pow(origin.dimension(), 2) * 2);
+    	Board father = minQ.delMin();
+    	for(Board b : father.neighbors()) {
+    		minQ.insert(b);
+    		
+    	}
+    	
+    	priority = Math.min(b.manhattan() + this.moves(), priority);
+    	
+    	
+    	
+    	
+    			
+		// comput the priority of each neighbor boards by using mahatten
+		// find the min priority 
+    			
+    }
 
     // test client (see below) 
     public static void main(String[] args) {

@@ -1,13 +1,15 @@
 package eightpuzzle;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
+import edu.princeton.cs.algs4.Queue;
 
 public class Board {
 	private int n;
 	private int[][] tiles;
 	private Map<Integer, int[]> map;
+	
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
     public Board(int[][] tiles) {
@@ -63,7 +65,7 @@ public class Board {
     			else { 
 	    			absi = Math.abs(map.get(tiles[i][j])[0] - i); 
 	    			absj = Math.abs(map.get(tiles[i][j])[1] - j);
-	    			return sum += absj+ absj;
+	    			return sum += absi+ absj;
     			}
     		}
     	}
@@ -81,41 +83,77 @@ public class Board {
     	if (y == null) 	return false;
     	if (y.getClass() != this.getClass()) 	return false;
     	Board that = (Board) y;
+    	    	
+    	return that.dimension() == this.dimension() && Arrays.deepEquals(that.tiles, this.tiles);	
     	
-    	if(that.dimension() == this.dimension()) {
-    		for (int i = 0; i < n; i++) {
-        		for (int j = 0; j < n; j++) {
-        			if (that.tiles[i][j] != this.tiles[i][j]) 	return false;
-        		}
-        	}
-    		return true;
-    	}
     }
 
     // all neighboring boards
     public Iterable<Board> neighbors(){
     	int i = map.get(0)[0];
     	int j = map.get(0)[1];
-    	Stack<Board> s = new Stack<>();
-    	if (i == 0 )
-    		switch(j) {
-    			case 0: 
-    				this.tiles[i][j] = tiles[i][j+1];
-    				s.add(this);
-    			case n-1:
-    				this.tiles[i][j] = tiles[][]
-    		}
-    			
-    		
+    	Board neibor = null;
+    	Queue<Board> que = new Queue<>();
     	
+    	int[][] copyTilesU = copyAndExch("up", i, j);
+    	int[][] copyTilesD = copyAndExch("down", i, j);
+    	int[][] copyTilesL = copyAndExch("left", i, j);
+    	int[][] copyTilesR = copyAndExch("right", i, j);
+    	    	
+    	if (i != 0) 	
+	    	neibor = new Board(copyTilesD);
+			que.enqueue(neibor);
+    	if (i != n-1) 	
+	    	neibor = new Board(copyTilesU);
+			que.enqueue(neibor);
+    	if (j != 0)
+    		neibor = new Board(copyTilesL);
+			que.enqueue(neibor);
+    	if (j != n-1) 
+    		neibor = new Board(copyTilesR);
+			que.enqueue(neibor);
+			
+		return que;
+    }
+    
+    private int[][] copyAndExch(String dir, int i, int j) {
+    	int temp;
+    	int[][] ct = null;
+    	
+    	switch (dir) {
+			case "left":
+				ct = this.copyTiles();
+				temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;		
+			case "right":
+				ct = this.copyTiles();
+				temp = ct[i][j]; ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;	
+			case "down":
+				ct = this.copyTiles();
+				temp = ct[i][j]; ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
+			case "up":
+				ct = this.copyTiles();
+				temp = ct[i][j]; ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
+			default:
+    	}
+    	return ct;
+    }
+    
+    private int[][] copyTiles() {
+    	int[][] copyTiles = new int[n][n];
+    	for (int i = 0; i < n; i++) {
+    		for (int j = 0; j < n; j++) {
+    			copyTiles[i][j] = this.tiles[i][j];
+    		}
+    	}
+    	return copyTiles;
     }
 
     // a board that is obtained by exchanging any pair of tiles
-    public Board twin() {
-    	
-    }
+//    public Board twin() {
+//    	
+//    }
 
     // unit testing (not graded)
-    public static void main(String[] args)
+//    public static void main(String[] args)
 
 }
