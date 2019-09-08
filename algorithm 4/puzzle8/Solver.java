@@ -1,54 +1,73 @@
-package eightpuzzle;
+package pegasus.puzzle8;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Solver {
-	private Board origin;
-	private MinPQ<Board> minQ = new MinPQ<>();
-	
+	private SearchNode searchNode;
+	private MinPQ<SearchNode> minQ;
+	private Queue<Board> returnQ;
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
-    	this.origin = initial;
     	if (initial == null) 	throw new IllegalArgumentException ("input is null!!");
-    	minQ.insert(initial);
+    	this.searchNode = new SearchNode(initial);
+    	minQ = new MinPQ<>();
     }
 
     // is the initial board solvable? (see below)
     public boolean isSolvable() {
+		return false;
     	
     }
 
     // min number of moves to solve initial board
-    public int moves() {
-    	
-    			
+    public int moves() throws Exception {
+		if (returnQ == null)  throw new Exception("");
+		return returnQ.size();	
     }
 
     // sequence of boards in a shortest solution
     public Iterable<Board> solution(){
-    	int priority = (int) (Math.pow(origin.dimension(), 2) * 2);
-    	Board father = minQ.delMin();
-    	for(Board b : father.neighbors()) {
-    		minQ.insert(b);
-    		
+    	this.returnQ = new Queue<>();
+    	minQ.insert(searchNode);
+    	while (minQ.size() != 0) {
+			SearchNode deletedNode = minQ.delMin();
+			returnQ.enqueue(deletedNode.board);
+			SearchNode newNode;
+			while (deletedNode.board.neighbors() != null) {
+				for (Board b : deletedNode.board.neighbors()) {
+					newNode = new SearchNode(b);
+					newNode.move++;
+					newNode.previous = deletedNode;  // TODO how to use
+					minQ.insert(newNode);
+				}
+			}
     	}
+		return returnQ;  	  			
+    }
+    
+    private static class SearchNode implements Comparable<SearchNode>{
+    	private SearchNode previous;
+		private Board board;
+		private int priority;
+		private int move;
+		
+		public SearchNode(Board board) {
+			this.priority = this.board.manhattan() + move;
+		}
+		
+    	@Override
+		public int compareTo(SearchNode o) { 
+			return this.priority - o.priority;			
+		}
     	
-    	priority = Math.min(b.manhattan() + this.moves(), priority);
-    	
-    	
-    	
-    	
-    			
-		// comput the priority of each neighbor boards by using mahatten
-		// find the min priority 
-    			
     }
 
     // test client (see below) 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+    
         // create initial board from file
         In in = new In(args[0]);
         int n = in.readInt();
