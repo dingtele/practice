@@ -1,4 +1,4 @@
-package eightpuzzle;
+package pegasus.puzzle8;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -95,61 +95,56 @@ public class Board {
     public Iterable<Board> neighbors(){
     	int i = map.get(0)[0];
     	int j = map.get(0)[1];
-    	Board neiborD = null;
-    	Board neiborU = null;
-    	Board neiborL = null;
-    	Board neiborR = null;
+    	Board neibor;
     	Queue<Board> que = new Queue<>();
-    	
-    	int[][] copyTilesU = null;
-    	int[][] copyTilesD = null;
-    	int[][] copyTilesL = null;
-    	int[][] copyTilesR = null;
+    	int[][] copyTiles;
     	    	
     	if (i != 0) {
-    		copyTilesD = copyAndExch("down", i, j);
-	    	neiborD = new Board(copyTilesD);
-			que.enqueue(neiborD);
+    		copyTiles = copyAndExch("down", i, j);
+    		neibor = new Board(copyTiles);
+			que.enqueue(neibor);
     	}
     	if (i != n-1) {	
-    		copyTilesU = copyAndExch("up", i, j);
-	    	neiborU = new Board(copyTilesU);
-			que.enqueue(neiborU); 
+    		copyTiles = copyAndExch("up", i, j);
+    		neibor = new Board(copyTiles);
+			que.enqueue(neibor); 
     	}
     	if (j != 0) {
-    		copyTilesL = copyAndExch("left", i, j);
-    		neiborL = new Board(copyTilesL);
-			que.enqueue(neiborL);
+    		copyTiles = copyAndExch("left", i, j);
+    		neibor = new Board(copyTiles);
+			que.enqueue(neibor);
     	}
     	if (j != n-1) {
-    		copyTilesR = copyAndExch("right", i, j);
-    		neiborR = new Board(copyTilesR);
-			que.enqueue(neiborR);
+    		copyTiles = copyAndExch("right", i, j);
+    		neibor = new Board(copyTiles);
+			que.enqueue(neibor);
     	}	
 		return que;
     }
     
     private int[][] copyAndExch(String dir, int i, int j) {
-    	int temp;
+    	int temp = 0;
     	int[][] ct = null;
-    	
-    	switch (dir) {
-			case "left":
-				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;		
-			case "right":
-				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;	
-			case "down":
-				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
-			case "up":
-				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
-			case "twin":
-				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
+    	if (dir == "left") {
+			ct = this.copyTiles();
+			ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;	
     	}
+    	if (dir == "right") {
+			ct = this.copyTiles();
+			ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
+    	}
+		if (dir == "down") {
+			ct = this.copyTiles();
+			ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
+		}
+		if (dir == "up") {
+			ct = this.copyTiles();
+			ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
+		}
+		if (dir == "twin") {
+			ct = this.copyTiles();
+			ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
+		}
     	return ct;
     }
     
