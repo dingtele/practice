@@ -2,7 +2,10 @@ package eightpuzzle;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
 
 public class Board {
@@ -13,7 +16,7 @@ public class Board {
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
     public Board(int[][] tiles) {
-    	this.n = (int) Math.sqrt(tiles.length);
+    	this.n = tiles.length;
     	this.tiles = tiles;
     	this.map = new HashMap<>();
     	for (int i = 0; i < n; i++) {
@@ -92,27 +95,37 @@ public class Board {
     public Iterable<Board> neighbors(){
     	int i = map.get(0)[0];
     	int j = map.get(0)[1];
-    	Board neibor = null;
+    	Board neiborD = null;
+    	Board neiborU = null;
+    	Board neiborL = null;
+    	Board neiborR = null;
     	Queue<Board> que = new Queue<>();
     	
-    	int[][] copyTilesU = copyAndExch("up", i, j);
-    	int[][] copyTilesD = copyAndExch("down", i, j);
-    	int[][] copyTilesL = copyAndExch("left", i, j);
-    	int[][] copyTilesR = copyAndExch("right", i, j);
+    	int[][] copyTilesU = null;
+    	int[][] copyTilesD = null;
+    	int[][] copyTilesL = null;
+    	int[][] copyTilesR = null;
     	    	
-    	if (i != 0) 	
-	    	neibor = new Board(copyTilesD);
-			que.enqueue(neibor);
-    	if (i != n-1) 	
-	    	neibor = new Board(copyTilesU);
-			que.enqueue(neibor);
-    	if (j != 0)
-    		neibor = new Board(copyTilesL);
-			que.enqueue(neibor);
-    	if (j != n-1) 
-    		neibor = new Board(copyTilesR);
-			que.enqueue(neibor);
-			
+    	if (i != 0) {
+    		copyTilesD = copyAndExch("down", i, j);
+	    	neiborD = new Board(copyTilesD);
+			que.enqueue(neiborD);
+    	}
+    	if (i != n-1) {	
+    		copyTilesU = copyAndExch("up", i, j);
+	    	neiborU = new Board(copyTilesU);
+			que.enqueue(neiborU); 
+    	}
+    	if (j != 0) {
+    		copyTilesL = copyAndExch("left", i, j);
+    		neiborL = new Board(copyTilesL);
+			que.enqueue(neiborL);
+    	}
+    	if (j != n-1) {
+    		copyTilesR = copyAndExch("right", i, j);
+    		neiborR = new Board(copyTilesR);
+			que.enqueue(neiborR);
+    	}	
 		return que;
     }
     
@@ -123,17 +136,19 @@ public class Board {
     	switch (dir) {
 			case "left":
 				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;		
+				temp = ct[i][j]; ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;		
 			case "right":
 				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;	
+				temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;	
 			case "down":
 				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
+				temp = ct[i][j]; ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
 			case "up":
 				ct = this.copyTiles();
-				temp = ct[i][j]; ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
-			default:
+				temp = ct[i][j]; ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
+			case "twin":
+				ct = this.copyTiles();
+				temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
     	}
     	return ct;
     }
@@ -149,11 +164,36 @@ public class Board {
     }
 
     // a board that is obtained by exchanging any pair of tiles
-//    public Board twin() {
-//    	
-//    }
+    public Board twin() {
+    	Board twinBoard;
+    	int[][] newTiles;
+    	if (this.tiles[0][0] != 0 && this.tiles[0][1] != 0) {
+    		newTiles = copyAndExch("twin", 0, 0);
+    		twinBoard = new Board(newTiles);
+    	} else {
+        	newTiles = copyAndExch("twin", 1, 0);
+        	twinBoard = new Board(newTiles);
+    	}
+    		return twinBoard;
+    }
 
     // unit testing (not graded)
-//    public static void main(String[] args)
-
+    public static void main(String[] args) {
+		In in = new In(args[0]);
+	    int n = in.readInt();
+	    int[][] tiles = new int[n][n];
+	    for (int i = 0; i < n; i++)
+	        for (int j = 0; j < n; j++)
+	            tiles[i][j] = in.readInt();
+	    Board initial = new Board(tiles);
+//	    System.out.println(initial.toString());
+//	    System.out.println(initial.twin().toString());
+	    Iterator<Board> neibors = initial.neighbors().iterator();
+	    while (neibors.hasNext())
+	    	System.out.println(neibors.next().toString());
+	    }	    
+//	    System.out.println(initial.hamming());
+//	    System.out.println(initial.manhattan());
 }
+
+
