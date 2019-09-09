@@ -1,7 +1,8 @@
-package eightpuzzle;
+package pegasus.puzzle8;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;
+<<<<<<< HEAD
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
@@ -19,10 +20,25 @@ public class Solver {
     	this.initialNode = new SearchNode(initial, 0, null);
     	minQ = new MinPQ<>();
     	twinMinQ = new MinPQ<>(); 
+=======
+import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.StdOut;
+
+public class Solver {
+	private SearchNode searchNode;
+	private MinPQ<SearchNode> minQ;
+	private Queue<Board> returnQ;
+    // find a solution to the initial board (using the A* algorithm)
+    public Solver(Board initial) {
+    	if (initial == null) 	throw new IllegalArgumentException ("input is null!!");
+    	this.searchNode = new SearchNode(initial);
+    	minQ = new MinPQ<>();
+>>>>>>> 339ea4b96ce8d4a3f2407c43d6e0951a0043a837
     }
 
     // is the initial board solvable? (see below)
     public boolean isSolvable() {
+<<<<<<< HEAD
 		return this.solvable;   	
     }
 
@@ -31,10 +47,21 @@ public class Solver {
     	if (!this.isSolvable())
     		return -1;
     	else return this.goalNode.getMove();
+=======
+		return false;
+    	
+    }
+
+    // min number of moves to solve initial board
+    public int moves() throws Exception {
+		if (returnQ == null)  throw new Exception("");
+		return returnQ.size();	
+>>>>>>> 339ea4b96ce8d4a3f2407c43d6e0951a0043a837
     }
 
     // sequence of boards in a shortest solution
     public Iterable<Board> solution(){
+<<<<<<< HEAD
     	this.returnS = new Stack<>();
     	minQ.insert(initialNode);
     	twinMinQ.insert(new SearchNode(initialNode.board.twin(), 0, null));
@@ -76,6 +103,41 @@ public class Solver {
 			}  
     	} 
 		return returnS;  	  			
+=======
+    	this.returnQ = new Queue<>();
+    	minQ.insert(searchNode);
+    	while (minQ.size() != 0) {
+			SearchNode deletedNode = minQ.delMin();
+			returnQ.enqueue(deletedNode.board);
+			SearchNode newNode;
+			while (deletedNode.board.neighbors() != null) {
+				for (Board b : deletedNode.board.neighbors()) {
+					newNode = new SearchNode(b);
+					newNode.move++;
+					newNode.previous = deletedNode;  // TODO how to use
+					minQ.insert(newNode);
+				}
+			}
+    	}
+		return returnQ;  	  			
+    }
+    
+    private static class SearchNode implements Comparable<SearchNode>{
+    	private SearchNode previous;
+		private Board board;
+		private int priority;
+		private int move;
+		
+		public SearchNode(Board board) {
+			this.priority = this.board.manhattan() + move;
+		}
+		
+    	@Override
+		public int compareTo(SearchNode o) { 
+			return this.priority - o.priority;			
+		}
+    	
+>>>>>>> 339ea4b96ce8d4a3f2407c43d6e0951a0043a837
     }
     
     private static class SearchNode implements Comparable<SearchNode>{
@@ -95,6 +157,7 @@ public class Solver {
 			return this.priority - o.priority;			
 		}
 
+<<<<<<< HEAD
 		public SearchNode getPrevious() {
 			return previous;
 		}
@@ -108,6 +171,8 @@ public class Solver {
 		}
     }
 
+=======
+>>>>>>> 339ea4b96ce8d4a3f2407c43d6e0951a0043a837
     // test client (see below) 
     public static void main(String[] args) throws Exception {
     
