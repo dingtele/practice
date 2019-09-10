@@ -1,4 +1,4 @@
-package pegasus.puzzle8;
+package eightpuzzle;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -77,7 +77,7 @@ public class Board {
 
     // is this board the goal board?
     public boolean isGoal() {
-    	return (hamming() == 0);
+    	return (this.hamming() == 0);
     }
 
     // does this board equal y?
@@ -100,12 +100,12 @@ public class Board {
     	int[][] copyTiles;
     	    	
     	if (i != 0) {
-    		copyTiles = copyAndExch("down", i, j);
+    		copyTiles = copyAndExch("up", i, j);
     		neibor = new Board(copyTiles);
 			que.enqueue(neibor);
     	}
     	if (i != n-1) {	
-    		copyTiles = copyAndExch("up", i, j);
+    		copyTiles = copyAndExch("down", i, j);
     		neibor = new Board(copyTiles);
 			que.enqueue(neibor); 
     	}
@@ -123,27 +123,27 @@ public class Board {
     }
     
     private int[][] copyAndExch(String dir, int i, int j) {
-    	int temp = 0;
+    	int temp;
     	int[][] ct = null;
     	if (dir == "left") {
 			ct = this.copyTiles();
-			ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;	
+			temp = ct[i][j]; ct[i][j] = ct[i][j-1]; ct[i][j-1] = temp;	
     	}
     	if (dir == "right") {
 			ct = this.copyTiles();
-			ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
+			temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
     	}
 		if (dir == "down") {
 			ct = this.copyTiles();
-			ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
+			temp = ct[i][j]; ct[i][j] = ct[i+1][j]; ct[i+1][j] = temp;	
 		}
 		if (dir == "up") {
 			ct = this.copyTiles();
-			ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
+			temp = ct[i][j]; ct[i][j] = ct[i-1][j]; ct[i-1][j] = temp;	
 		}
 		if (dir == "twin") {
 			ct = this.copyTiles();
-			ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
+			temp = ct[i][j]; ct[i][j] = ct[i][j+1]; ct[i][j+1] = temp;
 		}
     	return ct;
     }
@@ -183,12 +183,15 @@ public class Board {
 	    Board initial = new Board(tiles);
 //	    System.out.println(initial.toString());
 //	    System.out.println(initial.twin().toString());
-	    Iterator<Board> neibors = initial.neighbors().iterator();
-	    while (neibors.hasNext())
-	    	System.out.println(neibors.next().toString());
-	    }	    
-//	    System.out.println(initial.hamming());
+//	    Iterator<Board> neibors = initial.neighbors().iterator();
+//	    while (neibors.hasNext()){
+//	    	System.out.println(neibors.next().toString());
+//	    }	    
+	    System.out.println(initial.hamming());
 //	    System.out.println(initial.manhattan());
+	    System.out.println(initial.isGoal());
+
+    }
 }
 
 
