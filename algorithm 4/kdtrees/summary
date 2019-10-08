@@ -1,3 +1,53 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  PASSED
+API:          PASSED
+
+Spotbugs:     PASSED
+PMD:          FAILED (1 warning)
+Checkstyle:   FAILED (0 errors, 29 warnings)
+
+Correctness:  4/35 tests passed
+Memory:       8/16 tests passed
+Timing:       14/42 tests passed
+
+Aggregate score: 28.52%
+[Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+6.9K Oct  8 14:01 KdTree.java
+1.9K Oct  8 14:01 PointSET.java
+
+
+********************************************************************************
+*  COMPILING
+********************************************************************************
+
+
+% javac11 PointSET.java
+*-----------------------------------------------------------
+
+% javac11 KdTree.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+PointSET:
+
+KdTree:
+
+================================================================
+
+
 ********************************************************************************
 *  CHECKING STYLE AND COMMON BUG PATTERNS
 ********************************************************************************
