@@ -1,4 +1,4 @@
-package kdtrees;
+package pegasus.kdtrees;
 
 public class RedBlackBST <Key extends Comparable<Key>, Value>{
 	

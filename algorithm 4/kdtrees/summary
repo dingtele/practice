@@ -1,0 +1,1527 @@
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS
+********************************************************************************
+
+
+% spotbugs *.class
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+PointSET.java:11: The private instance (or static) variable 'N' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PMD ends with 1 warning.
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+[WARN] KdTree.java:7:8: Unused import statement for 'java.util.TreeSet'. [UnusedImports]
+[WARN] KdTree.java:11:1: File contains tab characters (this is the first occurrence). Configure your editor to replace tabs with spaces. [FileTabCharacter]
+[WARN] KdTree.java:18:93: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:72:48: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:72:50: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:72:54: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:84:34: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:90:9: 'if' is not followed by whitespace. [WhitespaceAround]
+[WARN] KdTree.java:90:22: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:91:27: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:91:32: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:91:37: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:91:42: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] KdTree.java:107:29: ',' is preceded with whitespace. [NoWhitespaceBefore]
+[WARN] KdTree.java:116:29: ',' is preceded with whitespace. [NoWhitespaceBefore]
+[WARN] KdTree.java:133:29: ',' is preceded with whitespace. [NoWhitespaceBefore]
+[WARN] KdTree.java:142:29: ',' is preceded with whitespace. [NoWhitespaceBefore]
+[WARN] KdTree.java:157:45: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:212:30: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:222:28: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:250:57: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:255:41: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:270:47: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:277:38: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] KdTree.java:284:39: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] PointSET.java:10:1: File contains tab characters (this is the first occurrence). Configure your editor to replace tabs with spaces. [FileTabCharacter]
+[WARN] PointSET.java:11:17: The instance variable 'N' must start with a lowercase letter and use camelCase. [MemberName]
+Checkstyle ends with 0 errors and 27 warnings.
+
+% custom checkstyle checks for PointSET.java
+*-----------------------------------------------------------
+[WARN] PointSET.java:46:46: The numeric literal '0.01' appears to be unnecessary. [NumericLiteral]
+Checkstyle ends with 0 errors and 1 warning.
+
+% custom checkstyle checks for KdTree.java
+*-----------------------------------------------------------
+[WARN] KdTree.java:251:17: You should not need to use the 'SET' data type in this program. [IllegalType]
+Checkstyle ends with 0 errors and 1 warning.
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of PointSET
+*-----------------------------------------------------------
+Running 8 total tests.
+
+A point in an m-by-m grid means that it is of the form (i/m, j/m),
+where i and j are integers between 0 and m
+
+Test 1: insert n random points; check size() and isEmpty() after each insertion
+        (size may be less than n because of duplicates)
+  * 5 random points in a 1-by-1 grid
+    - failed on trial 1 of 5
+    - student   size()    = 0
+    - reference size()    = 1
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of points inserted:
+      A  0.0 1.0
+
+  * 50 random points in a 8-by-8 grid
+    - failed on trial 1 of 50
+    - student   size()    = 0
+    - reference size()    = 1
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of points inserted:
+      A  0.375 0.75
+
+  * 100 random points in a 16-by-16 grid
+    - failed on trial 1 of 100
+    - student   size()    = 0
+    - reference size()    = 1
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of points inserted:
+      A  0.0625 0.4375
+
+  * 1000 random points in a 128-by-128 grid
+    - failed on trial 1 of 1000
+    - student   size()    = 0
+    - reference size()    = 1
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of points inserted:
+      A  0.0859375 0.15625
+
+  * 5000 random points in a 1024-by-1024 grid
+    - failed on trial 1 of 5000
+    - student   size()    = 0
+    - reference size()    = 1
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of points inserted:
+      A  0.5361328125 0.8642578125
+
+  * 50000 random points in a 65536-by-65536 grid
+    - failed on trial 1 of 50000
+    - student   size()    = 0
+    - reference size()    = 1
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of points inserted:
+      A  0.586151123046875 0.8883819580078125
+
+==> FAILED
+
+Test 2: insert n random points; check contains() with random query points
+  * 1 random points in a 1-by-1 grid
+  * 10 random points in a 4-by-4 grid
+  * 20 random points in a 8-by-8 grid
+  * 10000 random points in a 128-by-128 grid
+  * 100000 random points in a 1024-by-1024 grid
+  * 100000 random points in a 65536-by-65536 grid
+==> passed
+
+Test 3: insert random points; check nearest() with random query points
+  * 10 random points in a 4-by-4 grid
+    - failed on trial 1 of 1000
+    - student   nearest()  = null
+    - reference nearest()  = (0.5, 1.0)
+
+  * 15 random points in a 8-by-8 grid
+    - failed on trial 1 of 1000
+    - student   nearest()  = null
+    - reference nearest()  = (0.75, 0.875)
+
+  * 20 random points in a 16-by-16 grid
+    - failed on trial 1 of 1000
+    - student   nearest()  = null
+    - reference nearest()  = (0.875, 0.9375)
+
+  * 100 random points in a 32-by-32 grid
+    - failed on trial 1 of 1000
+    - student   nearest()  = null
+    - reference nearest()  = (0.46875, 0.1875)
+
+  * 10000 random points in a 65536-by-65536 grid
+    - failed on trial 1 of 1000
+    - student   nearest()  = null
+    - reference nearest()  = (0.541473388671875, 0.45086669921875)
+
+==> FAILED
+
+Test 4: insert random points; check range() with random query rectangles
+  * 2 random points and random rectangles in a 2-by-2 grid
+  * 10 random points and random rectangles in a 4-by-4 grid
+  * 20 random points and random rectangles in a 8-by-8 grid
+  * 100 random points and random rectangles in a 16-by-16 grid
+  * 1000 random points and random rectangles in a 64-by-64 grid
+  * 10000 random points and random rectangles in a 128-by-128 grid
+==> passed
+
+Test 5: call methods before inserting any points
+ * size() and isEmpty()
+ * contains()
+ * nearest()
+ * range()
+==> passed
+
+Test 6: call methods with null argument
+  * insert()
+  * contains()
+    - throws wrong exception when calling contains() with a null argument
+    - throws a java.lang.NullPointerException
+    - should throw a java.lang.IllegalArgumentException
+
+  * range()
+    - throws wrong exception when calling range() with a null argument
+    - throws a java.lang.NullPointerException
+    - should throw a java.lang.IllegalArgumentException
+
+  * nearest()
+==> FAILED
+
+Test 7: check intermixed sequence of calls to insert(), isEmpty(),
+        size(), contains(), range(), and nearest() with
+        probabilities (p1, p2, p3, p4, p5, p6, p7), respectively
+  * 10000 calls with random points in a 1-by-1 grid
+    and probabilities (0.3, 0.1, 0.1, 0.1, 0.2, 0.2)
+    - failed on trial 4 of 10000
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of operations was:
+           set.isEmpty()  ==>  true
+           set.size()     ==>  0
+           set.insert((1.0, 1.0))
+           set.isEmpty()  ==>  true
+
+  * 10000 calls with random points in a 16-by-16 grid
+    and probabilities (0.3, 0.1, 0.1, 0.1, 0.2, 0.2)
+    - failed on trial 5 of 10000
+    - query point          = (0.6875, 0.625)
+    - student   nearest()  = null
+    - reference nearest()  = (0.6875, 0.1875)
+    - sequence of operations was:
+           set.size()     ==>  0
+           set.size()     ==>  0
+           set.insert((0.6875, 0.1875))
+           set.insert((0.5, 0.0))
+           set.nearest((0.6875, 0.625))   ==>  null
+
+  * 10000 calls with random points in a 128-by-128 grid
+    and probabilities (0.3, 0.1, 0.1, 0.1, 0.2, 0.2)
+    - failed on trial 3 of 10000
+    - student   isEmpty() = true
+    - reference isEmpty() = false
+    - sequence of operations was:
+           set.insert((0.6328125, 0.859375))
+           set.range([0.5859375, 0.984375] x [0.015625, 0.9296875])  ==>  (0.6328125, 0.859375)
+           set.isEmpty()  ==>  true
+
+  * 10000 calls with random points in a 1024-by-1024 grid
+    and probabilities (0.3, 0.1, 0.1, 0.1, 0.2, 0.2)
+    - failed on trial 2 of 10000
+    - student   size() = 0
+    - reference size() = 1
+    - sequence of operations was:
+           set.insert((0.3173828125, 0.2041015625))
+           set.size()     ==>  0
+
+  * 10000 calls with random points in a 8192-by-8192 grid
+    and probabilities (0.3, 0.1, 0.1, 0.1, 0.2, 0.2)
+    - failed on trial 4 of 10000
+    - student   size() = 0
+    - reference size() = 3
+    - sequence of operations was:
+           set.insert((0.9288330078125, 0.6973876953125))
+           set.insert((0.4964599609375, 0.5517578125))
+           set.insert((0.978515625, 0.7750244140625))
+           set.size()     ==>  0
+
+  * 10000 calls with random points in a 65536-by-65536 grid
+    and probabilities (0.3, 0.1, 0.1, 0.1, 0.2, 0.2)
+    - failed on trial 3 of 10000
+    - query point          = (0.48876953125, 0.4451141357421875)
+    - student   nearest()  = null
+    - reference nearest()  = (0.703887939453125, 0.1236724853515625)
+    - sequence of operations was:
+           set.isEmpty()  ==>  true
+           set.insert((0.703887939453125, 0.1236724853515625))
+           set.nearest((0.48876953125, 0.4451141357421875))   ==>  null
+
+==> FAILED
+
+Test 8: check that two PointSET objects can be created at the same time
+==> passed
+
+
+Total: 4/8 tests passed!
+
+
+================================================================
+Testing correctness of KdTree
+*-----------------------------------------------------------
+Running 27 total tests.
+
+In the tests below, we consider three classes of points and rectangles.
+
+  * Non-degenerate points: no two points (or rectangles) share either an
+                           x-coordinate or a y-coordinate
+
+  * Distinct points:       no two points (or rectangles) share both an
+                           x-coordinate and a y-coordinate
+
+  * General points:        no restrictions on the x-coordinates or y-coordinates
+                           of the points (or rectangles)
+
+A point in an m-by-m grid means that it is of the form (i/m, j/m),
+where i and j are integers between 0 and m (inclusive).
+
+Test 1a: insert points from file; check size() and isEmpty() after each insertion
+  * input0.txt
+  * input1.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:161)
+    TestKdTree.test1a(TestKdTree.java:1576)
+    TestKdTree.main(TestKdTree.java:1924)
+
+  * input5.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:161)
+    TestKdTree.test1a(TestKdTree.java:1577)
+    TestKdTree.main(TestKdTree.java:1924)
+
+  * input10.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:161)
+    TestKdTree.test1a(TestKdTree.java:1578)
+    TestKdTree.main(TestKdTree.java:1924)
+
+==> FAILED
+
+Test 1b: insert non-degenerate points; check size() and isEmpty() after each insertion
+  * 1 random non-degenerate points in a 1-by-1 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1b(TestKdTree.java:1585)
+    TestKdTree.main(TestKdTree.java:1927)
+
+  * 5 random non-degenerate points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1b(TestKdTree.java:1586)
+    TestKdTree.main(TestKdTree.java:1927)
+
+  * 10 random non-degenerate points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1b(TestKdTree.java:1587)
+    TestKdTree.main(TestKdTree.java:1927)
+
+  * 50 random non-degenerate points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1b(TestKdTree.java:1588)
+    TestKdTree.main(TestKdTree.java:1927)
+
+  * 500 random non-degenerate points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1b(TestKdTree.java:1589)
+    TestKdTree.main(TestKdTree.java:1927)
+
+  * 50000 random non-degenerate points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1b(TestKdTree.java:1590)
+    TestKdTree.main(TestKdTree.java:1927)
+
+==> FAILED
+
+Test 1c: insert distinct points; check size() and isEmpty() after each insertion
+  * 1 random distinct points in a 1-by-1 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1c(TestKdTree.java:1597)
+    TestKdTree.main(TestKdTree.java:1930)
+
+  * 10 random distinct points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1c(TestKdTree.java:1598)
+    TestKdTree.main(TestKdTree.java:1930)
+
+  * 20 random distinct points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1c(TestKdTree.java:1599)
+    TestKdTree.main(TestKdTree.java:1930)
+
+  * 10000 random distinct points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1c(TestKdTree.java:1600)
+    TestKdTree.main(TestKdTree.java:1930)
+
+  * 100000 random distinct points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1c(TestKdTree.java:1601)
+    TestKdTree.main(TestKdTree.java:1930)
+
+  * 100000 random distinct points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1c(TestKdTree.java:1602)
+    TestKdTree.main(TestKdTree.java:1930)
+
+==> FAILED
+
+Test 1d: insert general points; check size() and isEmpty() after each insertion
+  * 5 random general points in a 1-by-1 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1d(TestKdTree.java:1609)
+    TestKdTree.main(TestKdTree.java:1933)
+
+  * 10 random general points in a 4-by-4 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1d(TestKdTree.java:1610)
+    TestKdTree.main(TestKdTree.java:1933)
+
+  * 50 random general points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1d(TestKdTree.java:1611)
+    TestKdTree.main(TestKdTree.java:1933)
+
+  * 100000 random general points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1d(TestKdTree.java:1612)
+    TestKdTree.main(TestKdTree.java:1933)
+
+  * 100000 random general points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1d(TestKdTree.java:1613)
+    TestKdTree.main(TestKdTree.java:1933)
+
+  * 100000 random general points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:187)
+    TestKdTree.checkSizeAndIsEmpty(TestKdTree.java:156)
+    TestKdTree.test1d(TestKdTree.java:1614)
+    TestKdTree.main(TestKdTree.java:1933)
+
+==> FAILED
+
+Test 2a: insert points from file; check contains() with random query points
+  * input0.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.contains(KdTree.java:165)
+    KdTree.contains(KdTree.java:154)
+    TestKdTree.checkContains(TestKdTree.java:245)
+    TestKdTree.checkContains(TestKdTree.java:229)
+    TestKdTree.test2a(TestKdTree.java:1622)
+    TestKdTree.main(TestKdTree.java:1936)
+
+  * input1.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:229)
+    TestKdTree.test2a(TestKdTree.java:1623)
+    TestKdTree.main(TestKdTree.java:1936)
+
+  * input5.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:229)
+    TestKdTree.test2a(TestKdTree.java:1624)
+    TestKdTree.main(TestKdTree.java:1936)
+
+  * input10.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:229)
+    TestKdTree.test2a(TestKdTree.java:1625)
+    TestKdTree.main(TestKdTree.java:1936)
+
+==> FAILED
+
+Test 2b: insert non-degenerate points; check contains() with random query points
+  * 1 random non-degenerate points in a 1-by-1 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2b(TestKdTree.java:1633)
+    TestKdTree.main(TestKdTree.java:1939)
+
+  * 5 random non-degenerate points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2b(TestKdTree.java:1634)
+    TestKdTree.main(TestKdTree.java:1939)
+
+  * 10 random non-degenerate points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2b(TestKdTree.java:1635)
+    TestKdTree.main(TestKdTree.java:1939)
+
+  * 20 random non-degenerate points in a 32-by-32 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2b(TestKdTree.java:1636)
+    TestKdTree.main(TestKdTree.java:1939)
+
+  * 500 random non-degenerate points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2b(TestKdTree.java:1637)
+    TestKdTree.main(TestKdTree.java:1939)
+
+  * 10000 random non-degenerate points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2b(TestKdTree.java:1638)
+    TestKdTree.main(TestKdTree.java:1939)
+
+==> FAILED
+
+Test 2c: insert distinct points; check contains() with random query points
+  * 1 random distinct points in a 1-by-1 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2c(TestKdTree.java:1646)
+    TestKdTree.main(TestKdTree.java:1942)
+
+  * 10 random distinct points in a 4-by-4 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2c(TestKdTree.java:1647)
+    TestKdTree.main(TestKdTree.java:1942)
+
+  * 20 random distinct points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2c(TestKdTree.java:1648)
+    TestKdTree.main(TestKdTree.java:1942)
+
+  * 10000 random distinct points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2c(TestKdTree.java:1649)
+    TestKdTree.main(TestKdTree.java:1942)
+
+  * 100000 random distinct points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2c(TestKdTree.java:1650)
+    TestKdTree.main(TestKdTree.java:1942)
+
+  * 100000 random distinct points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2c(TestKdTree.java:1651)
+    TestKdTree.main(TestKdTree.java:1942)
+
+==> FAILED
+
+Test 2d: insert general points; check contains() with random query points
+  * 10000 random general points in a 1-by-1 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2d(TestKdTree.java:1659)
+    TestKdTree.main(TestKdTree.java:1945)
+
+  * 10000 random general points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2d(TestKdTree.java:1660)
+    TestKdTree.main(TestKdTree.java:1945)
+
+  * 10000 random general points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2d(TestKdTree.java:1661)
+    TestKdTree.main(TestKdTree.java:1945)
+
+  * 10000 random general points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkContains(TestKdTree.java:239)
+    TestKdTree.checkContains(TestKdTree.java:223)
+    TestKdTree.test2d(TestKdTree.java:1662)
+    TestKdTree.main(TestKdTree.java:1945)
+
+==> FAILED
+
+Test 3a: insert points from file; check range() with random query rectangles
+  * input0.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.RectHV.contains(RectHV.java:230)
+    KdTree.range(KdTree.java:256)
+    KdTree.range(KdTree.java:247)
+    TestKdTree.checkRange(TestKdTree.java:576)
+    TestKdTree.checkRange(TestKdTree.java:529)
+    TestKdTree.test3a(TestKdTree.java:1670)
+    TestKdTree.main(TestKdTree.java:1948)
+
+  * input1.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:529)
+    TestKdTree.test3a(TestKdTree.java:1671)
+    TestKdTree.main(TestKdTree.java:1948)
+
+  * input5.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:529)
+    TestKdTree.test3a(TestKdTree.java:1672)
+    TestKdTree.main(TestKdTree.java:1948)
+
+  * input10.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:529)
+    TestKdTree.test3a(TestKdTree.java:1673)
+    TestKdTree.main(TestKdTree.java:1948)
+
+==> FAILED
+
+Test 3b: insert non-degenerate points; check range() with random query rectangles
+  * 1 random non-degenerate points and random rectangles in a 2-by-2 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3b(TestKdTree.java:1681)
+    TestKdTree.main(TestKdTree.java:1951)
+
+  * 5 random non-degenerate points and random rectangles in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3b(TestKdTree.java:1682)
+    TestKdTree.main(TestKdTree.java:1951)
+
+  * 10 random non-degenerate points and random rectangles in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3b(TestKdTree.java:1683)
+    TestKdTree.main(TestKdTree.java:1951)
+
+  * 20 random non-degenerate points and random rectangles in a 32-by-32 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3b(TestKdTree.java:1684)
+    TestKdTree.main(TestKdTree.java:1951)
+
+  * 500 random non-degenerate points and random rectangles in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3b(TestKdTree.java:1685)
+    TestKdTree.main(TestKdTree.java:1951)
+
+  * 10000 random non-degenerate points and random rectangles in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3b(TestKdTree.java:1686)
+    TestKdTree.main(TestKdTree.java:1951)
+
+==> FAILED
+
+Test 3c: insert distinct points; check range() with random query rectangles
+  * 2 random distinct points and random rectangles in a 2-by-2 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3c(TestKdTree.java:1693)
+    TestKdTree.main(TestKdTree.java:1954)
+
+  * 10 random distinct points and random rectangles in a 4-by-4 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3c(TestKdTree.java:1694)
+    TestKdTree.main(TestKdTree.java:1954)
+
+  * 20 random distinct points and random rectangles in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3c(TestKdTree.java:1695)
+    TestKdTree.main(TestKdTree.java:1954)
+
+  * 100 random distinct points and random rectangles in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3c(TestKdTree.java:1696)
+    TestKdTree.main(TestKdTree.java:1954)
+
+  * 1000 random distinct points and random rectangles in a 64-by-64 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3c(TestKdTree.java:1697)
+    TestKdTree.main(TestKdTree.java:1954)
+
+  * 10000 random distinct points and random rectangles in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3c(TestKdTree.java:1698)
+    TestKdTree.main(TestKdTree.java:1954)
+
+==> FAILED
+
+Test 3d: insert general points; check range() with random query rectangles
+  * 5000 random general points and random rectangles in a 2-by-2 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3d(TestKdTree.java:1706)
+    TestKdTree.main(TestKdTree.java:1957)
+
+  * 5000 random general points and random rectangles in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3d(TestKdTree.java:1707)
+    TestKdTree.main(TestKdTree.java:1957)
+
+  * 5000 random general points and random rectangles in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3d(TestKdTree.java:1708)
+    TestKdTree.main(TestKdTree.java:1957)
+
+  * 5000 random general points and random rectangles in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRange(TestKdTree.java:544)
+    TestKdTree.checkRange(TestKdTree.java:523)
+    TestKdTree.test3d(TestKdTree.java:1709)
+    TestKdTree.main(TestKdTree.java:1957)
+
+==> FAILED
+
+Test 3e: insert random points; check range() with tiny rectangles
+         enclosing each point
+  * 5 tiny rectangles and 5 general points in a 2-by-2 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTiny(TestKdTree.java:613)
+    TestKdTree.test3e(TestKdTree.java:1717)
+    TestKdTree.main(TestKdTree.java:1960)
+
+  * 10 tiny rectangles and 10 general points in a 4-by-4 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTiny(TestKdTree.java:613)
+    TestKdTree.test3e(TestKdTree.java:1718)
+    TestKdTree.main(TestKdTree.java:1960)
+
+  * 20 tiny rectangles and 20 general points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTiny(TestKdTree.java:613)
+    TestKdTree.test3e(TestKdTree.java:1719)
+    TestKdTree.main(TestKdTree.java:1960)
+
+  * 5000 tiny rectangles and 5000 general points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTiny(TestKdTree.java:613)
+    TestKdTree.test3e(TestKdTree.java:1720)
+    TestKdTree.main(TestKdTree.java:1960)
+
+  * 5000 tiny rectangles and 5000 general points in a 1024-by-1024 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTiny(TestKdTree.java:613)
+    TestKdTree.test3e(TestKdTree.java:1721)
+    TestKdTree.main(TestKdTree.java:1960)
+
+  * 5000 tiny rectangles and 5000 general points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTiny(TestKdTree.java:613)
+    TestKdTree.test3e(TestKdTree.java:1722)
+    TestKdTree.main(TestKdTree.java:1960)
+
+==> FAILED
+
+Test 4a: insert points from file; check range() with random query rectangles
+         and check traversal of kd-tree
+  * input5.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:660)
+    TestKdTree.test4a(TestKdTree.java:1731)
+    TestKdTree.main(TestKdTree.java:1963)
+
+  * input10.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:660)
+    TestKdTree.test4a(TestKdTree.java:1732)
+    TestKdTree.main(TestKdTree.java:1963)
+
+==> FAILED
+
+Test 4b: insert non-degenerate points; check range() with random query rectangles
+         and check traversal of kd-tree
+  * 3 random non-degenerate points and 1000 random rectangles in a 4-by-4 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:654)
+    TestKdTree.test4b(TestKdTree.java:1742)
+    TestKdTree.main(TestKdTree.java:1966)
+
+  * 6 random non-degenerate points and 1000 random rectangles in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:654)
+    TestKdTree.test4b(TestKdTree.java:1743)
+    TestKdTree.main(TestKdTree.java:1966)
+
+  * 10 random non-degenerate points and 1000 random rectangles in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:654)
+    TestKdTree.test4b(TestKdTree.java:1744)
+    TestKdTree.main(TestKdTree.java:1966)
+
+  * 20 random non-degenerate points and 1000 random rectangles in a 32-by-32 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:654)
+    TestKdTree.test4b(TestKdTree.java:1745)
+    TestKdTree.main(TestKdTree.java:1966)
+
+  * 30 random non-degenerate points and 1000 random rectangles in a 64-by-64 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:677)
+    TestKdTree.checkRangeTraversal(TestKdTree.java:654)
+    TestKdTree.test4b(TestKdTree.java:1746)
+    TestKdTree.main(TestKdTree.java:1966)
+
+==> FAILED
+
+Test 5a: insert points from file; check nearest() with random query points
+  * input0.txt
+
+    java.lang.NullPointerException
+
+    KdTree.nearest(KdTree.java:273)
+    KdTree.nearest(KdTree.java:267)
+    TestKdTree.checkNearest(TestKdTree.java:316)
+    TestKdTree.checkNearest(TestKdTree.java:282)
+    TestKdTree.test5a(TestKdTree.java:1754)
+    TestKdTree.main(TestKdTree.java:1969)
+
+  * input1.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:282)
+    TestKdTree.test5a(TestKdTree.java:1755)
+    TestKdTree.main(TestKdTree.java:1969)
+
+  * input5.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:282)
+    TestKdTree.test5a(TestKdTree.java:1756)
+    TestKdTree.main(TestKdTree.java:1969)
+
+  * input10.txt
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:282)
+    TestKdTree.test5a(TestKdTree.java:1757)
+    TestKdTree.main(TestKdTree.java:1969)
+
+==> FAILED
+
+Test 5b: insert non-degenerate points; check nearest() with random query points
+  * 5 random non-degenerate points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5b(TestKdTree.java:1766)
+    TestKdTree.main(TestKdTree.java:1972)
+
+  * 10 random non-degenerate points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5b(TestKdTree.java:1767)
+    TestKdTree.main(TestKdTree.java:1972)
+
+  * 20 random non-degenerate points in a 32-by-32 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5b(TestKdTree.java:1768)
+    TestKdTree.main(TestKdTree.java:1972)
+
+  * 30 random non-degenerate points in a 64-by-64 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5b(TestKdTree.java:1769)
+    TestKdTree.main(TestKdTree.java:1972)
+
+  * 10000 random non-degenerate points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5b(TestKdTree.java:1770)
+    TestKdTree.main(TestKdTree.java:1972)
+
+==> FAILED
+
+Test 5c: insert distinct points; check nearest() with random query points
+  * 10 random distinct points in a 4-by-4 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5c(TestKdTree.java:1778)
+    TestKdTree.main(TestKdTree.java:1975)
+
+  * 15 random distinct points in a 8-by-8 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5c(TestKdTree.java:1779)
+    TestKdTree.main(TestKdTree.java:1975)
+
+  * 20 random distinct points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5c(TestKdTree.java:1780)
+    TestKdTree.main(TestKdTree.java:1975)
+
+  * 100 random distinct points in a 32-by-32 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5c(TestKdTree.java:1781)
+    TestKdTree.main(TestKdTree.java:1975)
+
+  * 10000 random distinct points in a 65536-by-65536 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5c(TestKdTree.java:1782)
+    TestKdTree.main(TestKdTree.java:1975)
+
+==> FAILED
+
+Test 5d: insert general points; check nearest() with random query points
+  * 10000 random general points in a 16-by-16 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5d(TestKdTree.java:1790)
+    TestKdTree.main(TestKdTree.java:1978)
+
+  * 10000 random general points in a 128-by-128 grid
+
+    java.lang.NullPointerException
+
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:303)
+    edu.princeton.cs.algs4.Point2D$XOrder.compare(Point2D.java:286)
+    KdTree.insert(KdTree.java:101)
+    KdTree.insert(KdTree.java:85)
+    TestKdTree.checkNearest(TestKdTree.java:298)
+    TestKdTree.checkNearest(TestKdTree.java:276)
+    TestKdTree.test5d(TestKdTree.java:1791)
+    TestKdTree.main(TestKdTree.java:1978)
+
+  * 10000 random general points i
+
+...
+
+WARNING: the grading output was truncated due to excessive length.
+Typically, this is because you have a method that has an unanticipated side effect
+(such as printing to standard output or throwing an exception). A large amount of output
+can also arise from failing many tests.
